@@ -5,14 +5,11 @@
   <link rel="stylesheet" href="./styles.css" />
   <title>User List Demo</title>
   {/* Header component */}
-  <header className="header">
-    <div className="logo">
-      <span className="course">React Exercise - Components Deep Dive</span>
-    </div>
-  </header>
-  {/* Main component  */}
+
   <main className="main">
+
     <section className="card users-container">
+
       <div className="search-form">
         <h2>
           <svg
@@ -33,8 +30,73 @@
           <span>Users</span>
         </h2>
       </div>
+
       {/* Table component */}
-      <div className="table-wrapper">
+      <div className="table-wrapper">\
+        
+
+                <div class="loading-shade">
+                    {/* Loading spinner  */}
+                    <div class="spinner"></div>
+                    {/* No users added yet  */}
+                    <div class="table-overlap">
+                        <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            data-prefix="fas"
+                            data-icon="triangle-exclamation"
+                            class="svg-inline--fa fa-triangle-exclamation Table_icon__+HHgn"
+                            role="img"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"
+                            ></path>
+                        </svg>
+                        <h2>There is no users yet.</h2>
+                    </div>
+                    {/* No content overlap component  */}
+                    <div class="table-overlap">
+                        <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            data-prefix="fas"
+                            data-icon="triangle-exclamation"
+                            class="svg-inline--fa fa-triangle-exclamation Table_icon__+HHgn"
+                            role="img"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"
+                            ></path>
+                        </svg>
+                        <h2>Sorry, we couldn't find what you're looking for.</h2>
+                    </div>
+                    {/* On error overlap component  */}
+                    <div class="table-overlap">
+                        <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            data-prefix="fas"
+                            data-icon="triangle-exclamation"
+                            class="svg-inline--fa fa-triangle-exclamation Table_icon__+HHgn"
+                            role="img"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"
+                            ></path>
+                        </svg>
+                        <h2>Failed to fetch</h2>
+                    </div>
+                </div> 
+
         {/* Overlap components  */}
         {/* <div class="loading-shade"> */}
         {/* Loading spinner  */}
@@ -266,8 +328,10 @@
           </tbody>
         </table>
       </div>
+
       {/* New user button  */}
       <button className="btn-add btn">Add new user</button>
+
       {/* Pagination component  */}
       <div className="pagination position">
         <div className="limits">
@@ -351,10 +415,13 @@
           </button>
         </div>
       </div>
+
     </section>
+
     {/* User details component  */}
-    {/* <div class="overlay">
-<div class="backdrop"></div>
+  <div class="overlay">
+  <div class="backdrop"></div>
+
 <div class="modal">
   <div class="detail-container">
     <header class="headers">
@@ -392,9 +459,11 @@
     </div>
   </div>
 </div>
-    </div> */}
+
+    </div>
+
     {/* Create/Edit Form component  */}
-    {/* <div class="overlay">
+    <div class="overlay">
 <div class="backdrop"></div>
 <div class="modal">
   <div class="user-container">
@@ -494,9 +563,10 @@
     </form>
   </div>
 </div>
-    </div> */}
+    </div>
+
     {/* Delete user component  */}
-    {/* <div class="overlay">
+    <div class="overlay">
 <div class="backdrop"></div>
 <div class="modal">
   <div class="confirm-container">
@@ -521,10 +591,9 @@
     </div>
   </div>
 </div>
-    </div> */}
+    </div> 
+
   </main>
-  {/* Footer component  */}
-  <footer className="footer">
-    <p>This site is designed to be used for training purposes at SoftUni.</p>
-  </footer>
-</>
+
+    {/* <p>This site is designed to be used for training purposes at SoftUni.</p> */}
+
