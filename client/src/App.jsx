@@ -5,9 +5,20 @@ import Footer from './components/Footer'
 import Search from './components/Search'
 import UserList from './components/UserList'
 import Pagination from './components/Pagination'
+import CreateUserModal from './components/CreateUserModal'
 
 function App() {
   const [count, setCount] = useState(0)
+
+  const [createUserState, SetCreateUserState ] = useState(false);
+
+  const CreateUserHandler = () => {
+   SetCreateUserState(true);
+  }
+
+  const closeAddUserModalHandler = () => {
+    SetCreateUserState(false);
+  }
 
   return (
     <div>
@@ -17,13 +28,16 @@ function App() {
       <main className="main">
         <section className="card users-container">
 
-          <Search/>
+          <Search />
 
-          <UserList/>
+          <UserList />
+          <button className="btn-add btn" onClick={CreateUserHandler}>Add new user</button>
 
-          <Pagination/>
+          <Pagination />
 
         </section>
+
+        {createUserState && <CreateUserModal onClose={closeAddUserModalHandler} />}
 
       </main>
       <Footer />

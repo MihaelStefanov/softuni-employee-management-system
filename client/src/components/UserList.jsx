@@ -185,12 +185,10 @@ export default function Table() {
                     </thead>
                     <tbody>
                         {UsersList.map(user => <UserItem key={user._id} {...user}                          
-                            />
-                        )
-                        }
+                        />
+                        )}
                     </tbody>
                 </table>
-                <button className="btn-add btn">Add new user</button>
             </div>
 
         </>
