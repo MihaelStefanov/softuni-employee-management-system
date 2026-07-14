@@ -1,7 +1,10 @@
 export default function CreateUserModal({
     onClose,
     onSubmit,
+    userData,
 }) {
+    console.log('userData', userData['firstName']);
+
 
     return (
         <div className="overlay">
@@ -36,7 +39,7 @@ export default function CreateUserModal({
                                     <span>
                                         <i className="fa-solid fa-user" />
                                     </span>
-                                    <input id="firstName" name="firstName" type="text" />
+                                    <input id="firstName" name="firstName" type="text" value={userData['firstName']}/>
                                 </div>
                             </div>
                             <div className="form-group">
@@ -45,7 +48,7 @@ export default function CreateUserModal({
                                     <span>
                                         <i className="fa-solid fa-user" />
                                     </span>
-                                    <input id="lastName" name="lastName" type="text" />
+                                    <input id="lastName" name="lastName" type="text" value={userData['lastName']} />
                                 </div>
                             </div>
                         </div>

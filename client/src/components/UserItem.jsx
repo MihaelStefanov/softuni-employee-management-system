@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { fromIsoDate } from "../utils/datetimeUtils";
+import App from "../App";
 
 export default function UserItem(
     {
+    callBack,
     _id,
     firstName,
     lastName,
@@ -10,10 +13,10 @@ export default function UserItem(
     createdAt,
     updatedAt,
     imageUrl,
-    address,    
+    address,
     }
 ) {    
-    
+
     return (
         <tr>
             <td>
@@ -29,7 +32,9 @@ export default function UserItem(
             <td>{phoneNumber}</td>
             <td>{fromIsoDate(createdAt)}</td>
             <td className="actions">
-                <button className="btn edit-btn" title="Edit">
+                <button className="btn edit-btn" title="Edit"
+                onClick={() => callBack(_id)}
+                >
                     <svg
                         aria-hidden="true"
                         focusable="false"

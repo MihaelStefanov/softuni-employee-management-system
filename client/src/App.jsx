@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './index.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -7,8 +7,25 @@ import UserList from './components/UserList'
 import Pagination from './components/Pagination'
 import CreateUserModal from './components/CreateUserModal'
 
-function App() {
+function App({ }) {
+
   const [createUserState, SetCreateUserState] = useState(false);
+
+  const [curUserData, SetcurUserData] = useState({});
+
+  const [UsersList, SetUsersList] = useState([]);
+
+  const [forceRefresh, setForceRefresh] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:3030/jsonstore/users')
+      .then(response => response.json())
+      .then(data => {
+        SetUsersList(Object.values(data));
+      })
+      .catch(err => console.log(err))
+  }, [forceRefresh]);
+
 
   const CreateUserHandler = () => {
     SetCreateUserState(true);
@@ -20,13 +37,14 @@ function App() {
 
   const AddUserSubmitHandler = (event) => {
     event.preventDefault();
+    SetcurUserData({});
+    setForceRefresh(state => state = !state);
 
     const formData = new FormData(event.target);
 
     const userData = Object.fromEntries(formData);
 
     console.log('userData: ', userData);
-
 
     fetch('http://localhost:3030/jsonstore/users', {
       method: 'POST',
@@ -41,8 +59,22 @@ function App() {
 
       })
 
-      SetCreateUserState(false);
+    SetCreateUserState(false);
   }
+
+  const callBackUserId = (userId) => {
+    SetCreateUserState(true);
+
+    fetch(`http://localhost:3030/jsonstore/users/${userId}`)
+      .then(response => response.json())
+      .then(data => SetcurUserData(data))
+
+    console.log('callBack!!: ', userId);
+  }
+
+  useEffect(() => {
+    console.log('curUserData!!: ', curUserData);
+  }, [curUserData]);
 
   return (
     <div>
@@ -54,14 +86,23 @@ function App() {
 
           <Search />
 
-          <UserList />
+          <UserList 
+          UsersList={UsersList}
+          callBack={callBackUserId} />
           <button className="btn-add btn" onClick={CreateUserHandler}>Add new user</button>
 
           <Pagination />
 
         </section>
 
-        {createUserState && <CreateUserModal onClose={CloseHandler} onSubmit={AddUserSubmitHandler} />}
+        {createUserState && <CreateUserModal
+          onClose={CloseHandler}
+          onSubmit={AddUserSubmitHandler}
+          userData={curUserData} />}
+
+
+        {/* {curUserData && Object.keys(curUserData).length > 0 && 
+        <CreateUserModal onClose={CloseHandler} onSubmit={AddUserSubmitHandler} userData={curUserData} />} */}
 
       </main>
       <Footer />

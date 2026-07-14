@@ -2,23 +2,15 @@ import { useState } from "react";
 import { useEffect } from "react";
 import UserItem from "./UserItem";
 
-export default function Table() {
+export default function Table({
+    UsersList,
+    callBack,
+}) {
 
-    const [UsersList, SetUsersList] = useState([]);
-
-    useEffect(() => {
-        fetch('http://localhost:3030/jsonstore/users')
-            .then(response => response.json())
-            .then(data => {
-                SetUsersList(Object.values(data));
-            })
-            .catch(err => console.log(err))
-    }, []);
 
     // console.log("Users List: ", UserList);
 
-    UsersList.map(user => console.log("id: ", user._id, 'name: ', user.firstName))
-
+    // UsersList.map(user => console.log("id: ", user._id, 'name: ', user.firstName))
 
     return (
         <>
@@ -184,7 +176,7 @@ export default function Table() {
                         </tr>
                     </thead>
                     <tbody>
-                        {UsersList.map(user => <UserItem key={user._id} {...user}                          
+                        {UsersList.map(user => <UserItem key={user._id} callBack={callBack} {...user}                          
                         />
                         )}
                     </tbody>
