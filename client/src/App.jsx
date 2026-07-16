@@ -8,14 +8,11 @@ import Pagination from './components/Pagination'
 import CreateUserModal from './components/CreateUserModal'
 
 function App({ }) {
-
+  const [UsersList, SetUsersList] = useState([]);
   const [createUserState, SetCreateUserState] = useState(false);
+  const [forceRefresh, setForceRefresh] = useState(false);
 
   const [curUserData, SetcurUserData] = useState({});
-
-  const [UsersList, SetUsersList] = useState([]);
-
-  const [forceRefresh, setForceRefresh] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:3030/jsonstore/users')
@@ -26,13 +23,14 @@ function App({ }) {
       .catch(err => console.log(err))
   }, [forceRefresh]);
 
-
   const CreateUserHandler = () => {
     SetCreateUserState(true);
   }
 
   const CloseHandler = () => {
     SetCreateUserState(false);
+    SetcurUserData({});
+    setForceRefresh(state => state = !state);
   }
 
   const AddUserSubmitHandler = (event) => {
@@ -64,7 +62,6 @@ function App({ }) {
 
   const callBackUserId = (userId) => {
     SetCreateUserState(true);
-
     fetch(`http://localhost:3030/jsonstore/users/${userId}`)
       .then(response => response.json())
       .then(data => SetcurUserData(data))
@@ -75,6 +72,24 @@ function App({ }) {
   useEffect(() => {
     console.log('curUserData!!: ', curUserData);
   }, [curUserData]);
+
+  const deleteHandler = (userId) => {
+    setForceRefresh(state => state = !state);
+    fetch(`http://localhost:3030/jsonstore/users/${userId}`,  {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'aplication/json',
+      },
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+
+      }).catch(err => alert(err))
+
+    console.log(`On delete work !>>!?: `, userId);
+    
+  }
 
   return (
     <div>
@@ -88,7 +103,9 @@ function App({ }) {
 
           <UserList 
           UsersList={UsersList}
-          callBack={callBackUserId} />
+          callBack={callBackUserId}
+          onDelete={deleteHandler}
+          />
           <button className="btn-add btn" onClick={CreateUserHandler}>Add new user</button>
 
           <Pagination />
@@ -98,10 +115,10 @@ function App({ }) {
         {createUserState && <CreateUserModal
           onClose={CloseHandler}
           onSubmit={AddUserSubmitHandler}
-          userData={curUserData} />}
-
-
-        {/* {curUserData && Object.keys(curUserData).length > 0 && 
+          userData={curUserData}
+          />}
+          
+          {/* {curUserData && Object.keys(curUserData).length > 0 && 
         <CreateUserModal onClose={CloseHandler} onSubmit={AddUserSubmitHandler} userData={curUserData} />} */}
 
       </main>

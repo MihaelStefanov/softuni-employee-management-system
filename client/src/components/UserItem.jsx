@@ -5,6 +5,7 @@ import App from "../App";
 export default function UserItem(
     {
     callBack,
+    onDelete,
     _id,
     firstName,
     lastName,
@@ -51,7 +52,11 @@ export default function UserItem(
                         ></path>
                     </svg>
                 </button>
-                <button className="btn delete-btn" title="Delete">
+                <button className="btn delete-btn" title="Delete" 
+                // onClick={() => callBack(_id)} 
+                onClick={() => onDelete(_id)} 
+
+                >
                     <svg
                         aria-hidden="true"
                         focusable="false"
