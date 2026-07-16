@@ -7,11 +7,15 @@ import UserList from './components/UserList'
 import Pagination from './components/Pagination'
 import CreateUserModal from './components/CreateUserModal'
 import DeleteUserModal from './components/DeleteUserModal'
+import DetailsUserModal from './components/DetailsUserModal'
 
-function App({ }) {
+function App() {
   const [UsersList, SetUsersList] = useState([]);
   const [createUserState, SetCreateUserState] = useState(false);
   const [deleteUserState, SetDeleteUserState] = useState(false);
+  const [datailsState, SetDatailsState] = useState(false);
+
+
   const [deteteUserCurId, SetDeteteUserCurId] = useState('');
 
   const [forceRefresh, setForceRefresh] = useState(false);
@@ -34,6 +38,7 @@ function App({ }) {
   const CloseHandler = () => {
     SetCreateUserState(false);
     SetDeleteUserState(false)
+    SetDatailsState(false)
     SetcurUserData({});
     setForceRefresh(state => state = !state);
   }
@@ -103,6 +108,11 @@ function App({ }) {
     setForceRefresh(state => state = !state);
   }
 
+  const detailsHandler = () => {
+
+    SetDatailsState(true);
+  }
+
   return (
     <div>
 
@@ -117,6 +127,7 @@ function App({ }) {
           UsersList={UsersList}
           callBack={callBackUserId}
           deleteModalOpen={deleteModalOpen}
+          detailsModalOpen={detailsHandler}
           />
           <button className="btn-add btn" onClick={CreateUserHandler}>Add new user</button>
 
@@ -136,6 +147,16 @@ function App({ }) {
           userData={curUserData}
           userId={deteteUserCurId}
           />}
+
+          {
+            datailsState && <DetailsUserModal
+            onClose={CloseHandler
+
+            }/>
+
+          }
+
+          
           
           {/* {curUserData && Object.keys(curUserData).length > 0 && 
         <CreateUserModal onClose={CloseHandler} onSubmit={AddUserSubmitHandler} userData={curUserData} />} */}

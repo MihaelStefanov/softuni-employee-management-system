@@ -6,6 +6,7 @@ export default function UserItem(
     {
     callBack,
     deleteModalOpen,
+    detailsModalOpen,
     _id,
     firstName,
     lastName,
@@ -53,7 +54,7 @@ export default function UserItem(
                     </svg>
                 </button>
                 <button className="btn delete-btn" title="Delete" 
-                
+
                 onClick={() => deleteModalOpen(_id)} 
 
                 >
@@ -73,7 +74,7 @@ export default function UserItem(
                         ></path>
                     </svg>
                 </button>
-                <button className="btn info-btn" title="Info">
+                <button className="btn info-btn" title="Info" onClick={detailsModalOpen}>
                     <svg
                         aria-hidden="true"
                         focusable="false"

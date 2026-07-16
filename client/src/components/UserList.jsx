@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import UserItem from "./UserItem";
 
-export default function Table({
+export default function UserList({
     UsersList,
     callBack,
     deleteModalOpen,
+    detailsModalOpen,
 }) {
 
 
@@ -177,7 +178,7 @@ export default function Table({
                         </tr>
                     </thead>
                     <tbody>
-                        {UsersList.map(user => <UserItem key={user._id} callBack={callBack} deleteModalOpen={deleteModalOpen} {...user}                          
+                        {UsersList.map(user => <UserItem key={user._id} callBack={callBack} deleteModalOpen={deleteModalOpen} detailsModalOpen={detailsModalOpen} {...user}                          
                         />
                         )}
                     </tbody>
