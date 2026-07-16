@@ -5,7 +5,7 @@ import App from "../App";
 export default function UserItem(
     {
     callBack,
-    onDelete,
+    deleteModalOpen,
     _id,
     firstName,
     lastName,
@@ -53,8 +53,8 @@ export default function UserItem(
                     </svg>
                 </button>
                 <button className="btn delete-btn" title="Delete" 
-                // onClick={() => callBack(_id)} 
-                onClick={() => onDelete(_id)} 
+                
+                onClick={() => deleteModalOpen(_id)} 
 
                 >
                     <svg

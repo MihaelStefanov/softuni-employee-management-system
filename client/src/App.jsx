@@ -6,10 +6,14 @@ import Search from './components/Search'
 import UserList from './components/UserList'
 import Pagination from './components/Pagination'
 import CreateUserModal from './components/CreateUserModal'
+import DeleteUserModal from './components/DeleteUserModal'
 
 function App({ }) {
   const [UsersList, SetUsersList] = useState([]);
   const [createUserState, SetCreateUserState] = useState(false);
+  const [deleteUserState, SetDeleteUserState] = useState(false);
+  const [deteteUserCurId, SetDeteteUserCurId] = useState('');
+
   const [forceRefresh, setForceRefresh] = useState(false);
 
   const [curUserData, SetcurUserData] = useState({});
@@ -29,6 +33,7 @@ function App({ }) {
 
   const CloseHandler = () => {
     SetCreateUserState(false);
+    SetDeleteUserState(false)
     SetcurUserData({});
     setForceRefresh(state => state = !state);
   }
@@ -72,10 +77,15 @@ function App({ }) {
   useEffect(() => {
     console.log('curUserData!!: ', curUserData);
   }, [curUserData]);
+  
 
-  const deleteHandler = (userId) => {
-    setForceRefresh(state => state = !state);
-    fetch(`http://localhost:3030/jsonstore/users/${userId}`,  {
+  const deleteModalOpen = (CurUserId) => {
+    SetDeteteUserCurId(CurUserId);
+    SetDeleteUserState(true);
+  }
+
+  const deleteHandler = (CurUserId) => {
+    fetch(`http://localhost:3030/jsonstore/users/${CurUserId}`,  {
       method: 'DELETE',
       headers: {
         'content-type': 'aplication/json',
@@ -87,8 +97,10 @@ function App({ }) {
 
       }).catch(err => alert(err))
 
-    console.log(`On delete work !>>!?: `, userId);
-    
+    console.log(`On delete work !>>!?: `, CurUserId);
+
+    SetDeleteUserState(false);
+    setForceRefresh(state => state = !state);
   }
 
   return (
@@ -104,7 +116,7 @@ function App({ }) {
           <UserList 
           UsersList={UsersList}
           callBack={callBackUserId}
-          onDelete={deleteHandler}
+          deleteModalOpen={deleteModalOpen}
           />
           <button className="btn-add btn" onClick={CreateUserHandler}>Add new user</button>
 
@@ -116,6 +128,13 @@ function App({ }) {
           onClose={CloseHandler}
           onSubmit={AddUserSubmitHandler}
           userData={curUserData}
+          />}
+
+          {deleteUserState && <DeleteUserModal
+          onClose={CloseHandler}
+          onDelete={deleteHandler}
+          userData={curUserData}
+          userId={deteteUserCurId}
           />}
           
           {/* {curUserData && Object.keys(curUserData).length > 0 && 

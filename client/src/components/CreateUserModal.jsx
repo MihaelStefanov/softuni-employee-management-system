@@ -8,7 +8,7 @@ export default function CreateUserModal({
 
     return (
         <div className="overlay">
-            <div className="backdrop" onClick={onClose} />
+            <div className="backdrop"  onClick={onClose} />
             <div className="modal">
                 <div className="user-container">
                     <header className="headers">

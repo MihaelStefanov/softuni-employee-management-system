@@ -5,7 +5,7 @@ import UserItem from "./UserItem";
 export default function Table({
     UsersList,
     callBack,
-    onDelete,
+    deleteModalOpen,
 }) {
 
 
@@ -177,7 +177,7 @@ export default function Table({
                         </tr>
                     </thead>
                     <tbody>
-                        {UsersList.map(user => <UserItem key={user._id} callBack={callBack} onDelete={onDelete} {...user}                          
+                        {UsersList.map(user => <UserItem key={user._id} callBack={callBack} deleteModalOpen={deleteModalOpen} {...user}                          
                         />
                         )}
                     </tbody>
