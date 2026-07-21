@@ -178,7 +178,7 @@ export default function UserList({
                         </tr>
                     </thead>
                     <tbody>
-                        {UsersList.map(user => <UserItem key={user._id} callBack={callBack} deleteModalOpen={deleteModalOpen} detailsModalOpen={detailsModalOpen} {...user}                          
+                        {UsersList.map(user => <UserItem key={user._id} callBack={callBack}  {...user}                          
                         />
                         )}
                     </tbody>

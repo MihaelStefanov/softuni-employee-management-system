@@ -11,25 +11,26 @@ import DetailsUserModal from './components/DetailsUserModal'
 
 function App() {
   const [UsersList, SetUsersList] = useState([]);
+
   const [createUserState, SetCreateUserState] = useState(false);
   const [deleteUserState, SetDeleteUserState] = useState(false);
   const [datailsState, SetDatailsState] = useState(false);
 
+  const [curUserData, SetcurUserData] = useState({});
 
-  const [deteteUserCurId, SetDeteteUserCurId] = useState('');
+  // const [deteteUserCurId, SetDeteteUserCurId] = useState('');
 
   const [forceRefresh, setForceRefresh] = useState(false);
-
-  const [curUserData, SetcurUserData] = useState({});
 
   useEffect(() => {
     fetch('http://localhost:3030/jsonstore/users')
       .then(response => response.json())
       .then(data => {
-        SetUsersList(Object.values(data));
+        SetUsersList(Object.values(data))
       })
-      .catch(err => console.log(err))
+
   }, [forceRefresh]);
+
 
   const CreateUserHandler = () => {
     SetCreateUserState(true);
@@ -49,17 +50,34 @@ function App() {
     setForceRefresh(state => state = !state);
 
     const formData = new FormData(event.target);
-
+    
     const userData = Object.fromEntries(formData);
+    console.log(`userData in add User: `, userData['city']);
 
-    console.log('userData: ', userData);
+    const sortedData = {
+        "_id": userData['_id'],
+        "firstName": userData['firstName'],
+        "lastName": userData['lastName'],
+        "email": userData['email'],
+        "phoneNumber": userData['phoneNumber'],
+        "createdAt": new Date(),
+        "updatedAt": userData['updatedAt'],
+        "imageUrl": userData['imageUrl'],
+        "address": {
+            "country": userData['country'],
+            "city": userData['city'],
+            "street": userData['street'],
+            "streetNumber": userData['streetNumber']
+        }
+    }
 
     fetch('http://localhost:3030/jsonstore/users', {
       method: 'POST',
       headers: {
         'content-type': 'aplication/json',
       },
-      body: JSON.stringify(userData)
+      body: JSON.stringify(sortedData)
+
     })
       .then(response => response.json())
       .then(result => {
@@ -70,27 +88,32 @@ function App() {
     SetCreateUserState(false);
   }
 
-  const callBackUserId = (userId) => {
-    SetCreateUserState(true);
+  const callBackUserId = (method, userId) => {
+    if (method == "edit") {
+      SetCreateUserState(true);
+    }
+    else if (method == "info") {
+      SetDatailsState(true);
+    }
+    else if (method == "delete") {
+      SetDeleteUserState(true);
+    }
+
     fetch(`http://localhost:3030/jsonstore/users/${userId}`)
       .then(response => response.json())
       .then(data => SetcurUserData(data))
 
-    console.log('callBack!!: ', userId);
+    console.log('callBack id !!: ', userId );
+
   }
 
   useEffect(() => {
-    console.log('curUserData!!: ', curUserData);
+    console.log('curUserData!! in the app!!! : ', curUserData);
+    console.log('UsersList!! in the app!!! : ', UsersList);
   }, [curUserData]);
-  
 
-  const deleteModalOpen = (CurUserId) => {
-    SetDeteteUserCurId(CurUserId);
-    SetDeleteUserState(true);
-  }
-
-  const deleteHandler = (CurUserId) => {
-    fetch(`http://localhost:3030/jsonstore/users/${CurUserId}`,  {
+  const deleteHandler = () => {
+    fetch(`http://localhost:3030/jsonstore/users/${curUserData['_id']}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'aplication/json',
@@ -102,16 +125,18 @@ function App() {
 
       }).catch(err => alert(err))
 
-    console.log(`On delete work !>>!?: `, CurUserId);
+    console.log(`On delete work !>>!?: `, curUserData['_id']);
 
     SetDeleteUserState(false);
     setForceRefresh(state => state = !state);
   }
 
-  const detailsHandler = () => {
+  //todo  get curUserData from custom hook
+  // const detailsHandler = (curUserData) => {
 
-    SetDatailsState(true);
-  }
+  //   // SetDatailsState(true);
+  // }
+
 
   return (
     <div>
@@ -123,11 +148,9 @@ function App() {
 
           <Search />
 
-          <UserList 
-          UsersList={UsersList}
-          callBack={callBackUserId}
-          deleteModalOpen={deleteModalOpen}
-          detailsModalOpen={detailsHandler}
+          <UserList
+            UsersList={UsersList}
+            callBack={callBackUserId}
           />
           <button className="btn-add btn" onClick={CreateUserHandler}>Add new user</button>
 
@@ -139,26 +162,22 @@ function App() {
           onClose={CloseHandler}
           onSubmit={AddUserSubmitHandler}
           userData={curUserData}
-          />}
+        />}
 
-          {deleteUserState && <DeleteUserModal
+        {deleteUserState && <DeleteUserModal
           onClose={CloseHandler}
           onDelete={deleteHandler}
           userData={curUserData}
-          userId={deteteUserCurId}
-          />}
+        />}
 
-          {
-            datailsState && <DetailsUserModal
-            onClose={CloseHandler
+        {
+          datailsState && <DetailsUserModal
+            onClose={CloseHandler}
+            userData={curUserData}
+          />
+        }
 
-            }/>
-
-          }
-
-          
-          
-          {/* {curUserData && Object.keys(curUserData).length > 0 && 
+        {/* {curUserData && Object.keys(curUserData).length > 0 && 
         <CreateUserModal onClose={CloseHandler} onSubmit={AddUserSubmitHandler} userData={curUserData} />} */}
 
       </main>

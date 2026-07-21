@@ -1,11 +1,16 @@
+import { fromIsoDate } from "../utils/datetimeUtils";
+
 export default function DetailsUserModal({
     onClose,
+    userData,
 }) {
+
+    console.log('userData in detaisl comp: ', userData?.['address']?.["city"]);
 
     return (
 
         <div className="overlay">
-            <div className="backdrop" onClick={onClose} >
+            <div className="backdrop" onClick={() => onClose()} >
             </div>
             <div className="modal">
                 <div className="detail-container">
@@ -30,19 +35,30 @@ export default function DetailsUserModal({
                             </p>
                             <p>
                                 Full Name:
-                                <strong> Peter Johnson </strong>
+                                <strong> {userData['firstName']} {userData['lastName']}</strong>
                             </p>
-                            <p>Email: <strong>peter@abv.bg</strong>
+                            <p>Email: <strong>{userData['email']}</strong>
                             </p>
-                            <p>Phone Number: <strong>0812345678</strong>
+                            <p>Phone Number: <strong>{userData['phoneNumber']}</strong>
                             </p>
                             <p>
                                 Address:
-                                <strong> Bulgaria, Sofia, Aleksandar Malinov 78 </strong>
+
+                                <strong>
+                                    <span><br />
+                                        country: {userData?.address?.country},<br />
+                                        city: {userData?.address?.city}
+                                        city: {userData?.address?.city},<br />
+                                        street: {userData?.address?.street},<br />
+                                        streetNumber: {userData?.address?.streetNumber}
+                                    </span>
+                                </strong>
+
+
                             </p>
-                            <p>Created on: <strong>Wednesday, June 28, 2022</strong>
+                            <p>Created on: <strong>{fromIsoDate(userData['createdAt'])}</strong>
                             </p>
-                            <p>Modified on: <strong>Thursday, June 29, 2022</strong>
+                            <p>Modified on: <strong>{userData['updatedAt'] ? fromIsoDate(userData['updatedAt']) : "Not modified"}</strong>
                             </p>
                         </div>
                     </div>

@@ -1,8 +1,15 @@
+import { useEffect } from "react"
+
 export default function DeleteUserModal({
     onClose,
     onDelete,
-    userId,
+    // curUserData,
 }) {
+
+    useEffect(() => {
+        console.log(`curUserData in The Delete Modal `);  
+    })
+
     return (
      <div className="overlay">
             <div className="backdrop" onClick={() => onClose()}></div>
@@ -22,7 +29,7 @@ export default function DeleteUserModal({
                     <div className="actions">
                         <div id="form-actions">
                             <button id="action-save" className="btn" type="submit"
-                            onClick={() => onDelete(userId)}
+                            onClick={() => onDelete()}
                             >Delete</button>
                             <button id="action-cancel" className="btn" type="button"
                                 onClick={() => onClose()}

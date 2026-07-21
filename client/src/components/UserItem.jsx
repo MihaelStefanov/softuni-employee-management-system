@@ -5,8 +5,6 @@ import App from "../App";
 export default function UserItem(
     {
     callBack,
-    deleteModalOpen,
-    detailsModalOpen,
     _id,
     firstName,
     lastName,
@@ -35,7 +33,7 @@ export default function UserItem(
             <td>{fromIsoDate(createdAt)}</td>
             <td className="actions">
                 <button className="btn edit-btn" title="Edit"
-                onClick={() => callBack(_id)}
+                onClick={() => callBack('edit', _id)}
                 >
                     <svg
                         aria-hidden="true"
@@ -55,7 +53,7 @@ export default function UserItem(
                 </button>
                 <button className="btn delete-btn" title="Delete" 
 
-                onClick={() => deleteModalOpen(_id)} 
+                onClick={() => callBack('delete', _id)} 
 
                 >
                     <svg
@@ -74,7 +72,7 @@ export default function UserItem(
                         ></path>
                     </svg>
                 </button>
-                <button className="btn info-btn" title="Info" onClick={detailsModalOpen}>
+                <button className="btn info-btn" title="Info"  onClick={() => callBack('info', _id)}   >
                     <svg
                         aria-hidden="true"
                         focusable="false"
