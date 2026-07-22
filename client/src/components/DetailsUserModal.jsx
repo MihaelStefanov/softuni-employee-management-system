@@ -43,12 +43,10 @@ export default function DetailsUserModal({
                             </p>
                             <p>
                                 Address:
-
                                 <strong>
                                     <span><br />
                                         country: {userData?.address?.country},<br />
-                                        city: {userData?.address?.city}
-                                        city: {userData?.address?.city},<br />
+                                        city: {userData?.address?.city}<br />
                                         street: {userData?.address?.street},<br />
                                         streetNumber: {userData?.address?.streetNumber}
                                     </span>

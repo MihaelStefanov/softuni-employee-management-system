@@ -16,6 +16,8 @@ function App() {
   const [deleteUserState, SetDeleteUserState] = useState(false);
   const [datailsState, SetDatailsState] = useState(false);
 
+  const [editToggle, SetEditToggle] = useState(false);
+
   const [curUserData, SetcurUserData] = useState({});
 
   // const [deteteUserCurId, SetDeteteUserCurId] = useState('');
@@ -32,15 +34,17 @@ function App() {
   }, [forceRefresh]);
 
 
-  const CreateUserHandler = () => {
+  const CreateUserHandlerToggle = () => {
     SetCreateUserState(true);
   }
+
 
   const CloseHandler = () => {
     SetCreateUserState(false);
     SetDeleteUserState(false)
     SetDatailsState(false)
     SetcurUserData({});
+    SetEditToggle(false)
     setForceRefresh(state => state = !state);
   }
 
@@ -88,9 +92,54 @@ function App() {
     SetCreateUserState(false);
   }
 
+
+  const EditUserHandler = (event) => {
+    event.preventDefault();
+    SetcurUserData({});
+    setForceRefresh(state => state = !state);
+
+    const formData = new FormData(event.target);
+    
+    const userData = Object.fromEntries(formData);
+    console.log(`edit handler works : `, userData['city']);
+
+    const sortedData = {
+        "_id": userData['_id'],
+        "firstName": userData['firstName'],
+        "lastName": userData['lastName'],
+        "email": userData['email'],
+        "phoneNumber": userData['phoneNumber'],
+        "createdAt": new Date(),
+        "updatedAt": new Date(),
+        "imageUrl": userData['imageUrl'],
+        "address": {
+            "country": userData['country'],
+            "city": userData['city'],
+            "street": userData['street'],
+            "streetNumber": userData['streetNumber']
+        }
+    }
+
+    fetch(`http://localhost:3030/jsonstore/users${sortedData['_id']}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'aplication/json',
+      },
+      body: JSON.stringify(sortedData)
+
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+
+      })
+
+    SetCreateUserState(false);
+  } 
+
   const callBackUserId = (method, userId) => {
     if (method == "edit") {
-      SetCreateUserState(true);
+      SetEditToggle(true)
     }
     else if (method == "info") {
       SetDatailsState(true);
@@ -152,7 +201,7 @@ function App() {
             UsersList={UsersList}
             callBack={callBackUserId}
           />
-          <button className="btn-add btn" onClick={CreateUserHandler}>Add new user</button>
+          <button className="btn-add btn" onClick={CreateUserHandlerToggle}>Add new user</button>
 
           <Pagination />
 
@@ -160,7 +209,13 @@ function App() {
 
         {createUserState && <CreateUserModal
           onClose={CloseHandler}
-          onSubmit={AddUserSubmitHandler}
+          OnSave={AddUserSubmitHandler}
+          userData={curUserData}
+        />}
+
+        {editToggle && <CreateUserModal
+          onClose={CloseHandler}
+          OnSave={EditUserHandler}
           userData={curUserData}
         />}
 

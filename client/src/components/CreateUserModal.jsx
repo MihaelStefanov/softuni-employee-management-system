@@ -1,14 +1,13 @@
 export default function CreateUserModal({
     onClose,
-    onSubmit,
+    OnSave,
     userData,
 }) {
     console.log('userData', userData['firstName']);
-
-
+     
     return (
         <div className="overlay">
-            <div className="backdrop"  onClick={onClose} />
+            <div className="backdrop" onClick={onClose} />
             <div className="modal">
                 <div className="user-container">
                     <header className="headers">
@@ -31,108 +30,108 @@ export default function CreateUserModal({
                             </svg>
                         </button>
                     </header>
-                    <form  onSubmit={onSubmit}>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="firstName">First name</label>
-                                <div className="input-wrapper">
-                                    <span>
-                                        <i className="fa-solid fa-user" />
-                                    </span>
-                                    <input id="firstName" name="firstName" type="text" value={userData['firstName']}/>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="lastName">Last name</label>
-                                <div className="input-wrapper">
-                                    <span>
-                                        <i className="fa-solid fa-user" />
-                                    </span>
-                                    <input id="lastName" name="lastName" type="text" value={userData['lastName']} />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="email">Email</label>
-                                <div className="input-wrapper">
-                                    <span>
-                                        <i className="fa-solid fa-envelope" />
-                                    </span>
-                                    <input id="email" name="email" type="text" />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="phoneNumber">Phone number</label>
-                                <div className="input-wrapper">
-                                    <span>
-                                        <i className="fa-solid fa-phone" />
-                                    </span>
-                                    <input id="phoneNumber" name="phoneNumber" type="text" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="form-group long-line">
-                            <label htmlFor="imageUrl">Image Url</label>
+                    <form onSubmit={OnSave}>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label htmlFor="firstName">First name</label>
                             <div className="input-wrapper">
                                 <span>
-                                    <i className="fa-solid fa-image" />
+                                    <i className="fa-solid fa-user" />
                                 </span>
-                                <input id="imageUrl" name="imageUrl" type="text" />
+                                <input id="firstName" name="firstName" type="text" defaultValue={userData ? userData['firstName'] : ''} />
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="country">Country</label>
-                                <div className="input-wrapper">
-                                    <span>
-                                        <i className="fa-solid fa-map" />
-                                    </span>
-                                    <input id="country" name="country" type="text" />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="city">City</label>
-                                <div className="input-wrapper">
-                                    <span>
-                                        <i className="fa-solid fa-city" />
-                                    </span>
-                                    <input id="city" name="city" type="text" />
-                                </div>
+                        <div className="form-group">
+                            <label htmlFor="lastName">Last name</label>
+                            <div className="input-wrapper">
+                                <span>
+                                    <i className="fa-solid fa-user" />
+                                </span>
+                                <input id="lastName" name="lastName" type="text" defaultValue={userData['lastName']} />
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="street">Street</label>
-                                <div className="input-wrapper">
-                                    <span>
-                                        <i className="fa-solid fa-map" />
-                                    </span>
-                                    <input id="street" name="street" type="text" />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="streetNumber">Street number</label>
-                                <div className="input-wrapper">
-                                    <span>
-                                        <i className="fa-solid fa-house-chimney" />
-                                    </span>
-                                    <input id="streetNumber" name="streetNumber" type="text" />
-                                </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <div className="input-wrapper">
+                                <span>
+                                    <i className="fa-solid fa-envelope" />
+                                </span>
+                                <input id="email" name="email" type="text" defaultValue={userData['email']} />
                             </div>
                         </div>
-                        <div id="form-actions">
-                            <button id="action-save" className="btn" type="submit">
-                                Save
-                            </button>
-                            <button id="action-cancel" className="btn" type="button" onClick={onClose}>
-                                Cancel
-                            </button>
+                        <div className="form-group">
+                            <label htmlFor="phoneNumber">Phone number</label>
+                            <div className="input-wrapper">
+                                <span>
+                                    <i className="fa-solid fa-phone" />
+                                </span>
+                                <input id="phoneNumber" name="phoneNumber" type="text" defaultValue={userData['phoneNumber']} />
+                            </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div className="form-group long-line">
+                        <label htmlFor="imageUrl">Image Url</label>
+                        <div className="input-wrapper">
+                            <span>
+                                <i className="fa-solid fa-image" />
+                            </span>
+                            <input id="imageUrl" name="imageUrl" type="text" defaultValue={userData['imageUrl']} />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label htmlFor="country">Country</label>
+                            <div className="input-wrapper">
+                                <span>
+                                    <i className="fa-solid fa-map" />
+                                </span>
+                                <input id="country" name="country" type="text" defaultValue={userData?.['address']?.['country']} />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="city">City</label>
+                            <div className="input-wrapper">
+                                <span>
+                                    <i className="fa-solid fa-city" />
+                                </span>
+                                <input id="city" name="city" type="text" defaultValue={userData?.['address']?.['city']} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label htmlFor="street">Street</label>
+                            <div className="input-wrapper">
+                                <span>
+                                    <i className="fa-solid fa-map" />
+                                </span>
+                                <input id="street" name="street" type="text" defaultValue={userData?.['address']?.['street']} />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="streetNumber">Street number</label>
+                            <div className="input-wrapper">
+                                <span>
+                                    <i className="fa-solid fa-house-chimney" />
+                                </span>
+                                <input id="streetNumber" name="streetNumber" type="text" defaultValue={userData?.['address']?.['streetNumber']} />
+                            </div>
+                        </div>
+                    </div>
+                    <div id="form-actions">
+                        <button id="action-save" className="btn" type="submit">
+                            Save
+                        </button>
+                        <button id="action-cancel" className="btn" type="button" onClick={onClose}>
+                            Cancel
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
+        </div >
 
     )
 }
