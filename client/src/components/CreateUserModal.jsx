@@ -3,7 +3,9 @@ export default function CreateUserModal({
     OnSave,
     userData,
 }) {
-    console.log('userData', userData['firstName']);
+
+
+   userData &&  console.log('userData in the add/edit modal', userData);
      
     return (
         <div className="overlay">

@@ -38,7 +38,6 @@ function App() {
     SetCreateUserState(true);
   }
 
-
   const CloseHandler = () => {
     SetCreateUserState(false);
     SetDeleteUserState(false)
@@ -92,19 +91,18 @@ function App() {
     SetCreateUserState(false);
   }
 
-
   const EditUserHandler = (event) => {
     event.preventDefault();
-    SetcurUserData({});
+    
     setForceRefresh(state => state = !state);
 
     const formData = new FormData(event.target);
     
     const userData = Object.fromEntries(formData);
-    console.log(`edit handler works : `, userData['city']);
+    console.log(`edit handler works : `, userData);
 
     const sortedData = {
-        "_id": userData['_id'],
+        "_id": curUserData['_id'],
         "firstName": userData['firstName'],
         "lastName": userData['lastName'],
         "email": userData['email'],
@@ -119,22 +117,21 @@ function App() {
             "streetNumber": userData['streetNumber']
         }
     }
-
-    fetch(`http://localhost:3030/jsonstore/users${sortedData['_id']}`, {
+    fetch(`http://localhost:3030/jsonstore/users/${curUserData['_id']}`, {
       method: 'PUT',
       headers: {
-        'content-type': 'aplication/json',
+        'content-type': 'application/json',
       },
       body: JSON.stringify(sortedData)
 
     })
-      .then(response => response.json())
       .then(result => {
-        console.log(result);
-
+        console.log(`Edit Handler Result: `, result);
       })
 
-    SetCreateUserState(false);
+
+    SetcurUserData({});
+    SetEditToggle(false);
   } 
 
   const callBackUserId = (method, userId) => {
@@ -158,7 +155,7 @@ function App() {
 
   useEffect(() => {
     console.log('curUserData!! in the app!!! : ', curUserData);
-    console.log('UsersList!! in the app!!! : ', UsersList);
+    // console.log('UsersList!! in the app!!! : ', UsersList);
   }, [curUserData]);
 
   const deleteHandler = () => {
@@ -170,11 +167,11 @@ function App() {
     })
       .then(response => response.json())
       .then(result => {
-        console.log(result);
+        // console.log(result);
 
       }).catch(err => alert(err))
 
-    console.log(`On delete work !>>!?: `, curUserData['_id']);
+    // console.log(`On delete work !>>!?: `, curUserData['_id']);
 
     SetDeleteUserState(false);
     setForceRefresh(state => state = !state);
@@ -185,7 +182,6 @@ function App() {
 
   //   // SetDatailsState(true);
   // }
-
 
   return (
     <div>
